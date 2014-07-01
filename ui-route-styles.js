@@ -1,12 +1,12 @@
 /**
  * @author Manuel Mazzuola
- * https://github.com/manuelmazzuola/angular-route-styles
+ * https://github.com/manuelmazzuola/angular-ui-router-styles
  * Inspired by https://github.com/tennisgent/angular-route-styles
 */
 
 'use strict';
 angular
-  .module('uiRouteStyles', ['ui.router'])
+  .module('uiRouterStyles', ['ui.router'])
   .directive('head', ['$rootScope', '$compile',
     function($rootScope, $compile) {
       return {

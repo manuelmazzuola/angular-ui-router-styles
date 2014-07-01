@@ -49,7 +49,7 @@ How to install:
 
  * Ensure that your application module specifies `uiRouteStyles` as a dependency: `angular.module('myApplication', ['uiRouteStyles'])`
 
- * Add your css url to the state data object
+ * Add css file(s) relative path to the state data object
 ```javascript
 .state('state1', {
   url: '/state',

@@ -11,8 +11,8 @@ Angular's ui-router `$stateProvider` service. This solves that problem by allowi
 
 ```javascript
 app.config(['$stateProvider', function($stateProvider){
-    $routeProvider
-    
+    $stateProvider
+
       .state('state1', {
         url: '/state1',
         controller: 'State1controller',
@@ -27,7 +27,7 @@ app.config(['$stateProvider', function($stateProvider){
         controller: 'State12Controller',
         templateUrl: 'views/my-template.html'
       })
-      
+
       .state('state2', {
         url: '/state2',
         controller: 'State2Controller',
@@ -45,15 +45,15 @@ Note that `state1.state12` will have the parent file `styles/custom-state1-overr
 How to install:
 ---------------
 
- * Install it with Bower via `bower install angular-ui-route-styles --save`
+ * Install it with Bower via `bower install angular-ui-router-styles --save`
 
- * Ensure that your application module specifies `uiRouteStyles` as a dependency: `angular.module('myApplication', ['uiRouteStyles'])`
+ * Ensure that your application module specifies `uiRouterStyles` as a dependency: `angular.module('myApplication', ['uiRouterStyles'])`
 
  * Add css file(s) relative path to the state data object
 ```javascript
 .state('state1', {
   url: '/state',
-  controller: 'MarketPlaceCtrl',
+  controller: 'StateCtrl',
   templateUrl: 'views/my-template.html',
   data: {
     css: 'styles/some-overrides.css'

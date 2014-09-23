@@ -8,12 +8,14 @@
 
 angular
   .module('uiRouterStyles', ['ui.router'])
-  .directive('head', ['$rootScope', '$compile', '$state',
-    function($rootScope, $compile, $state) {
+  .directive('head', ['$rootScope', '$compile', '$state', '$interpolate',
+    function($rootScope, $compile, $state, $interpolate) {
       return {
         restrict: 'E',
         link: function(scope, elem){
-          var html = '<link rel="stylesheet" ng-repeat="(k, css) in routeStyles track by k" ng-href="{{css}}" >';
+          var start = $interpolate.startSymbol(),
+              end = $interpolate.endSymbol();
+          var html = '<link rel="stylesheet" ng-repeat="(k, css) in routeStyles track by k" ng-href="' + start + 'css' + end + '" >';
           elem.append($compile(html)(scope));
 
           // Get the parent state

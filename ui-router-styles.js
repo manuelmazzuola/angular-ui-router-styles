@@ -36,10 +36,13 @@ angular
                   state.data.css = [state.data.css];
                 }
                 angular.forEach(state.data.css, function(css) {
-                  scope.routeStyles.push(css);
+                  if(scope.routeStyles.indexOf(css) === -1) {
+                    scope.routeStyles.push(css);
+                  }
                 });
               }
             }
+            scope.routeStyles.reverse();
           });
         }
       };

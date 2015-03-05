@@ -27,7 +27,7 @@ angular
           };
 
           scope.routeStyles = [];
-          $rootScope.$on('$stateChangeStart', function (evt, toState) {
+          $rootScope.$on('$stateChangeSuccess', function (evt, toState) {
             // From current state to the root
             scope.routeStyles = [];
             for(var state = toState; state && state.name !== ''; state=$$parentState(state)) {

@@ -71,4 +71,4 @@ This directive does the following things:
 
 * It compiles (using `$compile`) an html string that creates a set of <link /> tags for every item in the `data.css` state property using `ng-repeat` and `ng-href`.
 * It appends that compiled set of `<link />` elements to the `<head>` tag.
-* It then uses the `$rootScope` to listen for `'$stateChangeStart'` events. For every `'$stateChangeStart'` event, it cleans all css appended before and adds the new css file(s) to the `<head>` tag if there are any.
+* It then uses the `$rootScope` to listen for `'$stateChangeSuccess'` events. For every `'$stateChangeSuccess'` event, it cleans all css appended before and adds the new css file(s) to the `<head>` tag if there are any.

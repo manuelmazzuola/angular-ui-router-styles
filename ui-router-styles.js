@@ -8,8 +8,8 @@
 
 angular
   .module('uiRouterStyles', ['ui.router'])
-  .directive('body', ['$rootScope', '$compile', '$state', '$interpolate', '$timeout',
-    function($rootScope, $compile, $state, $interpolate, $timeout) {
+  .directive('head', ['$rootScope', '$compile', '$state', '$interpolate',
+    function($rootScope, $compile, $state, $interpolate) {
       return {
         restrict: 'E',
         link: function(scope, elem){
@@ -26,23 +26,12 @@ angular
             return name && $state.get(name);
           };
 
-          var removeOldCSS = function(cssSize) {
-            $timeout(function() {
-              for(var i = 0; i < cssSize; i++) {
-                scope.routeStyles.shift()
-              }
-              scope.routeStyles.reverse();
-            }, 200); // Firefox workaround
-
-          };
-
+          scope.routeStyles = [];
           $rootScope.$on('$stateChangeSuccess', function (evt, toState) {
             // From current state to the root
-            scope.routeStyles = scope.routeStyles || [];
-            var oldStylesSize = scope.routeStyles.length;
-
+            scope.routeStyles = [];
             for(var state = toState; state && state.name !== ''; state=$$parentState(state)) {
-              if(state && state.data !== undefined && state.data.css) {
+              if(state && state.data && state.data.css) {
                 if(!Array.isArray(state.data.css)) {
                   state.data.css = [state.data.css];
                 }
@@ -53,13 +42,7 @@ angular
                 });
               }
             }
-
-            var unWatch = scope.$watch(function() {
-              return document.styleSheets.length;
-            }, function(cssLoaded) {
-              unWatch();
-              removeOldCSS(oldStylesSize);
-            });
+            scope.routeStyles.reverse();
           });
         }
       };

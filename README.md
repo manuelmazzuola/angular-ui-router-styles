@@ -1,6 +1,8 @@
 angular-ui-router-styles
 ====================
 
+[![Build Status](https://travis-ci.org/manuelmazzuola/angular-ui-router-styles.svg)](https://travis-ci.org/manuelmazzuola/angular-ui-router-styles)
+
 This is a simple module for AngularJS that provides the ability to have route-specific CSS stylesheets, by integrating with Angular [uiRouter](https://github.com/angular-ui/ui-router).
 
 What does it do?

@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-router-styles",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "ui-router-styles.js",
   "dependencies": {
     "angular": ">=1.2.0",

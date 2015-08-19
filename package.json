@@ -1,5 +1,6 @@
 {
   "name": "angular-ui-router-styles",
+  "version": "0.0.6",
   "private": false,
   "scripts": {
     "test": "grunt test"

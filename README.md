@@ -51,6 +51,15 @@ How to install:
 
  * Ensure that your application module specifies `uiRouterStyles` as a dependency: `angular.module('myApplication', ['uiRouterStyles'])`
 
+ * Add the directive `ui-router-styles` to your body tag or wherever you want
+ ```
+ <html>
+   <head>
+    <body ng-app="myApp" ui-router-styles>
+   </head>
+ </html>
+ ```
+
  * Add css file(s) relative path to the state data object
 ```javascript
 .state('state1', {
@@ -62,6 +71,8 @@ How to install:
   }
 })
 ```
+
+A simple plunkr to understand the usage:: http://plnkr.co/edit/rJEdureVMHShO08kJE4N?p=preview
 
 **Things to notice:**
 * Specifying a css property on the route is completely optional. If the state doesn't have a css property, the service will simply do nothing for that route.

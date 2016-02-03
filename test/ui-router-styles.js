@@ -2,37 +2,45 @@
 'use strict';
 
 describe('Unit: should inject some css', function () {
-  var $c, $scope, $state, green = 'green', red = 'red';
+  var $c, $scope, green = 'green', red = 'red', $state;
 
   // load the directive
-  beforeEach(module('ui.router'));
+  beforeEach(module('ui.router', function($locationProvider) {
+    $locationProvider.html5Mode(false);
+  }));
+
   beforeEach(module('uiRouterStyles'));
   beforeEach(module(defineStates));
   beforeEach(inject(function(_$compile_, _$rootScope_, _$state_) {
       $c = _$compile_;
-      $scope = _$rootScope_.$new();
       $state = _$state_;
+      $scope = _$rootScope_.$new();
     }
   ));
 
+  function initStateTo(state) {
+    $state.go(state);
+    $scope.$apply();
+    expect($state.current.name).toBe(state);
+  }
+
   it("should inject the green css", function() {
     var element;
-    element = $c('<head></head>')($scope);
-    $state.go(green)
+    element = $c('<ui-router-styles />')($scope);
+    initStateTo(green);
     $scope.$digest();
-    expect(element.html()).toContain('<link rel="stylesheet" ng-repeat="(k, css) in routeStyles track by k" ng-href="/green" class="ng-scope" href="/green">');
+    expect($scope.routeStyles).toContain('/green')
   });
 
   it("should inject the red css", function() {
     var element;
-    element = $c('<head></head>')($scope);
-    $state.go(green)
+    element = $c('<ui-router-styles />')($scope);
+    initStateTo(green);
     $scope.$digest();
-    expect(element.html()).toContain('<link rel="stylesheet" ng-repeat="(k, css) in routeStyles track by k" ng-href="/green" class="ng-scope" href="/green">');
-    $state.go(red)
-    $scope.$digest();
-    expect(element.html()).toContain('<link rel="stylesheet" ng-repeat="(k, css) in routeStyles track by k" ng-href="/red" class="ng-scope" href="/red">');
-    expect(element.html()).not.toContain('green');
+    expect($scope.routeStyles).toContain('/green')
+    initStateTo(red);
+    expect($scope.routeStyles).toContain('/red')
+    expect($scope.routeStyles).not.toContain('/green')
   });
 });
 

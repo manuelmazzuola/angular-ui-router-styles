@@ -8,18 +8,18 @@
   'use strict';
   angular
     .module('uiRouterStyles', ['ui.router'])
-    .directive('head', uiRouterStylesDirective);
+    .directive('uiRouterStyles', uiRouterStylesDirective);
 
-  uiRouterStylesDirective.$inject = ['$rootScope', '$compile', '$state', '$interpolate'];
-  function uiRouterStylesDirective($rootScope, $compile, $state, $interpolate) {
+  uiRouterStylesDirective.$inject = ['$rootScope', '$compile', '$state', '$interpolate', '$document'];
+  function uiRouterStylesDirective($rootScope, $compile, $state, $interpolate, $document) {
     var directive = {
-      restrict: 'E',
+      restrict: 'EA',
       link: uiRouterStylesLink
     };
 
     return directive;
 
-    function uiRouterStylesLink(scope, elem) {
+    function uiRouterStylesLink(scope) {
       var start = $interpolate.startSymbol(), end = $interpolate.endSymbol();
       var html = '<link rel="stylesheet" ng-repeat="(k, css) in routeStyles track by k" ng-href="' + start + 'css' + end + '" >';
 
@@ -30,7 +30,7 @@
       ////
 
       function activate() {
-        elem.append($compile(html)(scope));
+        angular.element($document[0].head).append($compile(html)(scope));
         $rootScope.$on('$stateChangeSuccess', stateChangeSuccessCallback);
       }
 

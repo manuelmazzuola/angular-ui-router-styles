@@ -20,14 +20,29 @@ app.config(['$stateProvider', function($stateProvider){
         controller: 'State1controller',
         template: '<div ui-view></div>',
         data: {
-          css: 'styles/custom-state1-override.css'
+          css: [
+            'styles/custom-state1.css',
+            {
+              name: 'layout',
+              href: 'styles/state1-layout.css'
+            }
+          ]
         }
       })
 
       .state('state1.state12', {
         url: '/:id',
         controller: 'State12Controller',
-        templateUrl: 'views/my-template.html'
+        templateUrl: 'views/my-template.html',
+        data: {
+          css: [
+            'styles/custom-state1.state12.css',
+            {
+              name: 'layout',
+              href: 'styles/state1.state12-layout.css'
+            }
+          ]
+        }
       })
 
       .state('state2', {
@@ -35,14 +50,27 @@ app.config(['$stateProvider', function($stateProvider){
         controller: 'State2Controller',
         templateUrl: 'views/another-template.html',
         data: {
-          css: ['styles/custom-state2-override.css', 'another.css']
+          css: ['styles/custom-state2.css', 'styles/another.css']
+        }
+      })
+
+      .state('state3', {
+        url: '/state3',
+        controller: 'State3Controller',
+        templateUrl: 'views/another-super-template.html',
+        data: {
+          css: 'styles/custom-state3.css'
         }
       })
         // more states can be declared here
 }]);
 ```
 
-Note that `state1.state12` will have the parent file `styles/custom-state1-override.css` injected; redefine the css array for override it.
+* For state1 state we will have CSS: ['styles/custom-state1.css', 'styles/state1-layout.css'].
+* For state1.state2 state we will have CSS: ['styles/custom-state1.css', 'styles/custom-state1.state12.css', 'styles/state1.state12-layout.css'].
+* For state2 state we will have CSS: ['styles/custom-state2.css', 'styles/another.css'].
+* For state3 state we will have CSS: ['styles/custom-state3.css'].
+
 
 How to install:
 ---------------
@@ -72,11 +100,11 @@ How to install:
 })
 ```
 
-A simple plunkr to understand the usage:: http://plnkr.co/edit/rJEdureVMHShO08kJE4N?p=preview
+A simple plunkr to understand the usage: http://plnkr.co/edit/HIcYEj2QRqBCwbZCU0Il?p=preview
 
 **Things to notice:**
 * Specifying a css property on the route is completely optional. If the state doesn't have a css property, the service will simply do nothing for that route.
-* You can even have multiple page-specific stylesheets per state, where the css property is an **array** of relative paths to the stylesheets needed for that route.
+* You can even have multiple page-specific stylesheets per state, where the css property is an **array** of relative paths or objects contains the name and href attributes.
 * If a parent state exists the data object is inherited.
 
 

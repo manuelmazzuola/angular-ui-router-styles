@@ -44,16 +44,26 @@
 
       function stateChangeSuccessCallback(evt, toState) {
         // From current state to the root
+        var stylesObject = {};
         scope.routeStyles = [];
+
         for(var state = toState; state && state.name !== ''; state=$$parentState(state)) {
           if(state && state.data && state.data.css) {
             if(!Array.isArray(state.data.css)) {
               state.data.css = [state.data.css];
             }
+
             angular.forEach(state.data.css, function(css) {
-              if(scope.routeStyles.indexOf(css) === -1) {
-                scope.routeStyles.push(css);
+              // css = {name: 'layout', href: '/layout.css'}
+              if(typeof css === 'object' && css.name && css.href && !stylesObject[css.name]) {
+                stylesObject[css.name] = css.href;
+              }else if(typeof css === 'string') {
+                stylesObject[css] = css;
               }
+            });
+
+            angular.forEach(stylesObject, function(style) {
+              if(scope.routeStyles.indexOf(style) === -1) scope.routeStyles.push(style);
             });
           }
         }

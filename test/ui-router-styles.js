@@ -42,19 +42,68 @@ describe('Unit: should inject some css', function () {
     expect($scope.routeStyles).toContain('/red')
     expect($scope.routeStyles).not.toContain('/green')
   });
+
+  it("should have the base layout", function() {
+    var element;
+    element = $c('<ui-router-styles />')($scope);
+    initStateTo(red);
+    $scope.$digest();
+    expect($scope.routeStyles).toContain('/red');
+    expect($scope.routeStyles).toContain('/layout-base.css');
+    expect($scope.routeStyles).not.toContain('/layout-green.css');
+  });
+
+  it("should have the green layout", function() {
+    var element;
+    element = $c('<ui-router-styles />')($scope);
+    initStateTo(green);
+    $scope.$digest();
+    expect($scope.routeStyles).toContain('/green');
+    expect($scope.routeStyles).not.toContain('/layout-base.css');
+    expect($scope.routeStyles).toContain('/layout-green.css');
+  });
 });
 
 function defineStates($stateProvider) {
+  $stateProvider.state('base', {
+    url: '/base',
+    template: '<div></div>',
+    abstract: true,
+    data: {
+      css: [
+        {
+          name: 'layout',
+          href: '/layout-base.css'
+        }
+      ]
+    }
+  });
+
   $stateProvider.state('green', {
     url: '/green',
+    parent: 'base',
     template: '<div></div>',
     controller: function() {},
-    data: { css: ['/green']}
+    data: {
+      css: [
+        '/green',
+        {
+          name: 'layout',
+          href: '/layout-green.css'
+        }
+      ]
+    }
   });
+
   $stateProvider.state('red', {
     url: '/red',
+    parent: 'base',
     template: '<div></div>',
     controller: function() {},
-    data: { css: ['/red']}
+    data: {
+      css: [
+        '/red'
+      ]
+    }
   });
 }
